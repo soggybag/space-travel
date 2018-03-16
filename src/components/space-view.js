@@ -59,7 +59,7 @@ class SpaceView extends Component {
     if (!this.start) this.start = timestamp;
 
     var progress = timestamp - this.start;
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     const speed = this.state.acceleration / 1000
 
@@ -71,6 +71,7 @@ class SpaceView extends Component {
       this.ctx.fillRect(pixel.x, pixel.y, 2, 2)
     }
     this.setState({ acceleration: this.state.acceleration + 1 })
+
     window.requestAnimationFrame(this.step.bind(this));
   }
 
@@ -78,11 +79,11 @@ class SpaceView extends Component {
     return (
       <div>
         <canvas
-          style={{width: '320px', margin: 'auto', display: 'block'}}
+          style={{ width: '320px', margin: 'auto', display: 'block' }}
           ref="canvas"
           width="320"
           height="320"></canvas>
-        <p style={{textAlign: 'center'}}>{this.state.acceleration}</p>
+        <p style={{ textAlign: 'center' }}>{ this.state.acceleration }</p>
       </div>
     )
   }
