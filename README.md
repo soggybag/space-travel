@@ -6,6 +6,10 @@ simulate the travel through space.
 Really it's just a simple implementation of canvas in
 React.
 
+Obligatory animated gif screenshot.
+
+![screenshot.gif](screenshot.gif)
+
 ## Aspirations
 
 This project aspires to provide the effect of traveling
