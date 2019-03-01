@@ -13,32 +13,33 @@ import Pixel from './Pixel'
 class SpaceView extends Component {
   constructor(props) {
     super(props)
-
+    // Define state. This will show a number below the canvas
     this.state = { acceleration: 0 }
-
+    // Define some variables used by this Component
     this.canvas = null
     this.ctx = null
     this.start = null
     this.pixels = []
-
+    // Make a 100 Pixel objects that will get drawn on the canvas
     for (let i = 0; i < 100; i++) {
       const pixel = new Pixel()
       pixel.reset()
       this.pixels.push(pixel)
     }
-    this.step.bind(this)
   }
 
   componentDidMount() {
-    // get a ref to the canvas
-    this.canvas = this.refs.canvas
+    // Get a ref to the canvas (matches the ref below in render)
+    this.canvas = this.refs.myCanvas
     this.ctx = this.canvas.getContext('2d')
     this.ctx.fillStyle = 'rgba(0, 0, 0, 1)'
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    window.requestAnimationFrame(this.step.bind(this));
+    // Start drawing on the canvas
+    this.step();
   }
 
   step(timestamp) {
+    // Every frame we update the canvas
     if (!this.start) this.start = timestamp;
 
     var progress = timestamp - this.start;
@@ -53,8 +54,8 @@ class SpaceView extends Component {
       this.ctx.fillRect(pixel.x, pixel.y, 2, 2)
     }
     this.setState({ acceleration: this.state.acceleration + 1 })
-
-    window.requestAnimationFrame(this.step.bind(this));
+    // Every frame we need to call step to update the canvas
+    window.requestAnimationFrame(() => this.step());
   }
 
   render() {
@@ -63,7 +64,7 @@ class SpaceView extends Component {
         <canvas
           style={{ width: '320px', margin: 'auto', display: 'block' }}
           // Set a ref for this element
-          ref="canvas"
+          ref="myCanvas"
           width="320"
           height="320"></canvas>
         <p style={{ textAlign: 'center' }}>{ this.state.acceleration }</p>
