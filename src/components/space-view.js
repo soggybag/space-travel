@@ -1,32 +1,14 @@
 import React, { Component } from 'react'
+import Pixel from './Pixel'
 
-// ! Use function for class
-class Pixel {
-  constructor() {
-    this.x = 160
-    this.y = 160
-    this.dx = (Math.random() * 2) - 1
-    this.dy = (Math.random() * 2) - 1
-    this.alpha = 0
-  }
-
-  reset() {
-    this.dx = (Math.random() * 2) - 1
-    this.dy = (Math.random() * 2) - 1
-    this.x = 160
-    this.y = 160
-    this.alpha = 0
-  }
-
-  move(speed) {
-    this.x += this.dx * speed
-    this.y += this.dy * speed
-    this.alpha += (Math.abs(this.dx) + Math.abs(this.dy)) / 100
-    if (this.x > 320 || this.x < 0 || this.y > 320 || this.y < 0) {
-      this.reset()
-    }
-  }
-}
+// =====================================================
+// This project uses canvas inside a React component. 
+// 
+// In order to use canvas we need to make sure that 
+// React's virtual DOM doesn't replace the canvas 
+// element defined in this component. To do this 
+// we can use ref. A ref is a reference to a DOM 
+// node. 
 
 class SpaceView extends Component {
   constructor(props) {
@@ -48,6 +30,7 @@ class SpaceView extends Component {
   }
 
   componentDidMount() {
+    // get a ref to the canvas
     this.canvas = this.refs.canvas
     this.ctx = this.canvas.getContext('2d')
     this.ctx.fillStyle = 'rgba(0, 0, 0, 1)'
@@ -66,7 +49,6 @@ class SpaceView extends Component {
     for (var i in this.pixels) {
       const pixel = this.pixels[i]
       pixel.move(speed)
-      // console.log(pixel.alpha);
       this.ctx.fillStyle = `rgba(255, 255, 255, ${pixel.alpha})`
       this.ctx.fillRect(pixel.x, pixel.y, 2, 2)
     }
@@ -80,6 +62,7 @@ class SpaceView extends Component {
       <div>
         <canvas
           style={{ width: '320px', margin: 'auto', display: 'block' }}
+          // Set a ref for this element
           ref="canvas"
           width="320"
           height="320"></canvas>
